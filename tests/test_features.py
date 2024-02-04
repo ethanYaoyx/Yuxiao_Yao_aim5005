@@ -16,7 +16,7 @@ class TestFeatures(TestCase):
         data = [[-1, 2], [-0.5, 6], [0, 10], [1, 18]]
         scaler.fit(data)
         assert (scaler.maximum == np.array([1., 18.])).all(), "scaler fit does not return maximum values [1., 18.] "
-        assert (scaler.minimum == np.array([-1., 2.])).all(), "scaler fit does not return maximum values [-1., 2.] " 
+        assert (scaler.minimum == np.array([-1., 2.])).all(), "scaler fit does not return minimum values [-1., 2.] "
         
         
     def test_min_max_scaler(self):
@@ -62,6 +62,13 @@ class TestFeatures(TestCase):
         assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1,-1), result.reshape(1,-1))
 
     # TODO: Add a test of your own below this line
-    
+    def test_standard_scaler_transform(self):
+        scaler = StandardScaler()
+        data = [[0, 0], [0, 0], [1, 1], [1, 1]]
+        expected = np.array([[-1., -1.], [-1., -1.], [1., 1.], [1., 1.]])
+        scaler.fit(data)
+        result = scaler.transform(data)
+        assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1,-1), result.reshape(1,-1))
+
 if __name__ == '__main__':
     unittest.main()
